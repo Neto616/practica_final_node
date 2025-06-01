@@ -18,14 +18,10 @@ app.use(cors());
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 
+console.log(process.env.PORT_DB)
+const DB_URL = process.env.DATABASE_URL;
 //Configuracion de la base de datos (host, usuario, contrase�a, nombre de la DB y puerto)
-const dbConfig = new Connection(
-	(process.env.HOST || 'localhost'),
-	(process.env.USR || 'root'),
-	(process.env.PASS || 'Neto_616'),
-	(process.env.DB || 'clasePrueba'),
-	(process.env.PORT_DB || '3306')
-);
+const dbConfig = new Connection(DB_URL);
 
 app.use(myConnection(mysql, dbConfig.pool, 'pool'))
 
