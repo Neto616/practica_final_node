@@ -1,14 +1,14 @@
 //IP http://192.168.164.181:3010
+require('dotenv').config()
 
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
-const mysql = require('mysql');
+const mysql = require('mysql2');
 const Connection = require('./models/mySQLConnection')
 const myConnection = require('express-myconnection')
 const cors = require("cors");
-require('dotenv').config()
 
 //settings
 app.set('port', 8080);
@@ -20,7 +20,6 @@ app.use(bodyParser.json());
 
 console.log(process.env.PORT_DB)
 const DB_URL = process.env.DATABASE_URL;
-//Configuracion de la base de datos (host, usuario, contrase�a, nombre de la DB y puerto)
 const dbConfig = new Connection(DB_URL);
 
 app.use(myConnection(mysql, dbConfig.pool, 'pool'))
